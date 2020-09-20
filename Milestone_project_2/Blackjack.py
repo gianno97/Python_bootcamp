@@ -31,4 +31,7 @@ class Deck:
         return self.all_cards.pop(0)
 
 class Player:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
+        
+
