@@ -33,5 +33,34 @@ class Deck:
 class Player:
     def __init__(self, name):
         self.name = name
+
+class Cash:
+    def __init__(self, amount):
+        self.amount = amount
+
+
+game_on = True
+
+print("Gioco del Blackjack testuale:")
+
+while(game_on):
+    # print("1.Gioca\n2.Esci")
+    # fsjkajdfkajfkd
+    x = input("1.Gioca\n2.Esci\n")
+
+    if(x == "1"):
+        new_player = Player(input("Inserisci nome giocatore: "))
+        new_amount = Cash(100)
+        print(new_player.name + " hai a disposizione", new_amount.amount)
+        bet = int(input("Fai una puntata "))
+        if(bet <= new_amount.amount):
+            print("OK!")
+        else:
+            print("Fondi insufficenti!")  
+    elif(x == "2"):
+        print("Gioco concluso!")
+        game_on = False
+    else:
+        print("Valore non valido!")
         
 
