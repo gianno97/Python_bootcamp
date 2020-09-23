@@ -30,6 +30,14 @@ class Deck:
     def hit(self):
         return self.all_cards.pop(0)
 
+    def initial_cards(self):
+        self.four_cards = []
+        
+        for i in range(4):
+            self.four_cards.append(self.all_cards.pop(0))
+
+        return self.four_cards
+
 class Player:
     def __init__(self, name):
         self.name = name
@@ -53,10 +61,75 @@ while(game_on):
         new_amount = Cash(100)
         print(new_player.name + " hai a disposizione", new_amount.amount)
         bet = int(input("Fai una puntata "))
-        if(bet <= new_amount.amount):
-            print("OK!")
-        else:
-            print("Fondi insufficenti!")  
+
+        while(True):
+            if(bet > 0 and bet <= new_amount.amount):
+                print("OK!")
+                break
+            else:
+                print("Valore non valido!")
+                bet = int(input("Fai una puntata "))
+        
+        new_deck = Deck()
+        new_deck.shuffle()
+        init_cards = new_deck.initial_cards()
+        dealer_cards = init_cards[0:2]
+        player_cards = init_cards[2:4]
+        print("Carte del dealer:\n", dealer_cards[0], "\nUna carta coperta")
+        print("Carte del giocatore:\n", player_cards[0], "\n", player_cards[1])
+        total_player = 0
+        total_dealer = 0
+
+        for card_player in player_cards:
+                    total_player += card_player.value
+
+        while(True):
+            action = input("1.Chiedi una carta\n2.Fermati\n")
+
+            if(action == "1"):
+                total_player = 0
+                player_cards.append(new_deck.hit())
+
+                for card_player in player_cards:
+                    total_player += card_player.value
+                
+                if(total_player == 21):
+                    print("Blackjack! Il giocatore ha vinto")
+                    break
+                elif(total_player < 21):
+                    print("Carte del giocatore:\n")
+                    for card_player in player_cards:
+                        print(card_player)
+                    continue
+                else:
+                    print("La somma è", total_player, "Il giocatore ha perso")
+                    break
+            elif(action == "2"):
+                while(True):
+                    total_dealer = 0
+                    for card_dealer in dealer_cards:
+                        total_dealer += card_dealer.value
+                    
+                    print(total_dealer)
+                    print("Carte del dealer:")
+                    for card_dealer in dealer_cards:
+                        print(card_dealer)
+
+                    if(total_dealer == 21):
+                        print("Blackjack! Il dealer ha vinto")
+                        break
+                    elif(total_dealer <= total_player):
+                        dealer_cards.append(new_deck.hit())
+                    else:
+                        if(total_dealer <= 21):
+                            print("Il dealer ha vinto")
+                            break
+                        else:
+                            print("Il giocatore ha vinto")
+                            break
+            else:
+                print("Valore non valido")
+            break
     elif(x == "2"):
         print("Gioco concluso!")
         game_on = False
