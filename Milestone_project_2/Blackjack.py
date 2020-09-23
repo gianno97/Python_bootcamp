@@ -68,9 +68,7 @@ while(game_on):
         bet = input("Fai una puntata ")
 
         while(True):
-            if(int(bet) != True):
-                print("Valore non valido!")
-            else:
+            try:
                 bet = int(bet)
                 if(bet > 0 and bet <= new_amount.amount):
                     print("OK!")
@@ -78,6 +76,9 @@ while(game_on):
                 else:
                     print("Valore non valido!")
                     bet = input("Fai una puntata ")
+            except ValueError:
+                print("Valore non valido")
+                bet = input("Fai una puntata ")
         
         new_deck = Deck()
         new_deck.shuffle()
@@ -141,9 +142,9 @@ while(game_on):
                             print("Il giocatore ha vinto", bet)
                             new_amount.add(bet)
                             break
+                break
             else:
                 print("Valore non valido")
-            break
     elif(x == "2"):
         print("Gioco concluso!")
         game_on = False
