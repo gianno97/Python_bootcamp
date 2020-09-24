@@ -1,9 +1,13 @@
 import random
+import os
 
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
 ranks = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace')
 values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9, 'Ten':10, 'Jack':10,
          'Queen':10, 'King':10, 'Ace':11}
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 class Card:
     def __init__(self, suit, rank):
@@ -54,7 +58,6 @@ class Cash:
     def subtract(self, bet):
         self.amount -= bet
 
-
 game_on = True
 
 print("Gioco del Blackjack testuale:")
@@ -74,9 +77,11 @@ while(game_on):
                     print("OK!")
                     break
                 else:
+                    cls()
                     print("Valore non valido!")
                     bet = input("Fai una puntata ")
             except ValueError:
+                cls()
                 print("Valore non valido")
                 bet = input("Fai una puntata ")
         
@@ -85,6 +90,7 @@ while(game_on):
         init_cards = new_deck.initial_cards()
         dealer_cards = init_cards[0:2]
         player_cards = init_cards[2:4]
+        cls()
         print("Carte del dealer:\n", dealer_cards[0], "\nUna carta coperta")
         print("Carte del giocatore:\n", player_cards[0], "\n", player_cards[1])
         total_player = 0
@@ -104,15 +110,18 @@ while(game_on):
                     total_player += card_player.value
                 
                 if(total_player == 21):
+                    cls()
                     print("Blackjack! Il giocatore ha vinto", bet)
                     new_amount.add(bet)
                     break
                 elif(total_player < 21):
+                    cls()
                     print("Carte del giocatore:\n")
                     for card_player in player_cards:
                         print(card_player)
                     continue
                 else:
+                    cls()
                     print("La somma è", total_player, "Il giocatore ha perso", bet)
                     new_amount.subtract(bet)
                     break
@@ -122,12 +131,13 @@ while(game_on):
                     for card_dealer in dealer_cards:
                         total_dealer += card_dealer.value
                     
-                    print(total_dealer)
+                    cls()
                     print("Carte del dealer:")
                     for card_dealer in dealer_cards:
                         print(card_dealer)
 
                     if(total_dealer == 21):
+                        cls()
                         print("Blackjack! Il dealer ha vinto")
                         new_amount.subtract(bet)
                         break
@@ -135,20 +145,25 @@ while(game_on):
                         dealer_cards.append(new_deck.hit())
                     else:
                         if(total_dealer <= 21):
+                            cls()
                             print("Il dealer ha vinto")
                             new_amount.subtract(bet)
                             break
                         else:
+                            cls()
                             print("Il giocatore ha vinto", bet)
                             new_amount.add(bet)
                             break
                 break
             else:
+                cls()
                 print("Valore non valido")
     elif(x == "2"):
+        cls()
         print("Gioco concluso!")
         game_on = False
     else:
+        cls()
         print("Valore non valido!")
         
 
